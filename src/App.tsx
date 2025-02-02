@@ -5,6 +5,7 @@ import Tutors from "@/pages/Tutors";
 import Tasks from "@/pages/Tasks";
 import Community from "@/pages/Community";
 import Resources from "@/pages/Resources";
+import SignUp from "@/pages/SignUp";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/community" element={<Community />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
