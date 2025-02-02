@@ -18,9 +18,19 @@ const SignUp = () => {
     mobile: "",
     email: "",
     location: "",
+    password: "",
+    confirmPassword: "",
   });
+  const [captcha, setCaptcha] = useState("");
+  const [userCaptcha, setUserCaptcha] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Generate random 6-digit captcha on component mount
+  useState(() => {
+    const randomCaptcha = Math.floor(100000 + Math.random() * 900000).toString();
+    setCaptcha(randomCaptcha);
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,12 +43,40 @@ const SignUp = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters long!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (userCaptcha !== captcha) {
+      toast({
+        title: "Error",
+        description: "Invalid CAPTCHA!",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // This is a placeholder for actual authentication logic
     toast({
       title: "Account created successfully!",
       description: "Please log in to continue.",
     });
-    navigate("/community");
+    navigate("/login");
   };
 
   return (
@@ -144,6 +182,60 @@ const SignUp = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your location"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                placeholder="Enter password (min 6 characters)"
+                minLength={6}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                placeholder="Confirm your password"
+                minLength={6}
+              />
+            </div>
+
+            <div>
+              <Label>Security Check</Label>
+              <div className="flex items-center gap-4 mb-2">
+                <div className="bg-gray-100 p-2 rounded font-mono text-lg">
+                  {captcha}
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    const newCaptcha = Math.floor(100000 + Math.random() * 900000).toString();
+                    setCaptcha(newCaptcha);
+                  }}
+                >
+                  Refresh
+                </Button>
+              </div>
+              <Input
+                type="text"
+                value={userCaptcha}
+                onChange={(e) => setUserCaptcha(e.target.value)}
+                required
+                placeholder="Enter the code above"
               />
             </div>
 
