@@ -43,6 +43,11 @@ const Community = () => {
           {!showChat ? (
             <div className="space-y-6 animate-fade-in">
               <h2 className="text-xl text-center mb-4">Select Your Class</h2>
+              <img 
+                src="/lovable-uploads/71d5625b-25db-42fe-9881-ff743972d880.png"
+                alt="Student Community Illustration"
+                className="w-full rounded-lg shadow-lg mb-6 animate-fade-in"
+              />
               <Select onValueChange={handleClassSelect}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select your class" />
