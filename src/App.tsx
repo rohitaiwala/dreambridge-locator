@@ -6,6 +6,7 @@ import Tasks from "@/pages/Tasks";
 import Community from "@/pages/Community";
 import Resources from "@/pages/Resources";
 import SignUp from "@/pages/SignUp";
+import Login from "@/pages/Login";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

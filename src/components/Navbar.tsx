@@ -45,17 +45,21 @@ export const Navbar = () => {
           </div>
           
           <div className="hidden md:flex space-x-4">
-            <Button 
-              variant="outline"
-              className="transition-transform duration-300 hover:scale-105"
-            >
-              Login
-            </Button>
-            <Button 
-              className="transition-transform duration-300 hover:scale-105 animate-fade-in"
-            >
-              Register
-            </Button>
+            <Link to="/login">
+              <Button 
+                variant="outline"
+                className="transition-transform duration-300 hover:scale-105"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button 
+                className="transition-transform duration-300 hover:scale-105 animate-fade-in"
+              >
+                Register
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -97,17 +101,21 @@ export const Navbar = () => {
               </Link>
             </div>
             <div className="flex flex-col space-y-2 px-4">
-              <Button 
-                variant="outline" 
-                className="w-full transition-transform duration-300 hover:scale-105"
-              >
-                Login
-              </Button>
-              <Button 
-                className="w-full transition-transform duration-300 hover:scale-105"
-              >
-                Register
-              </Button>
+              <Link to="/login">
+                <Button 
+                  variant="outline" 
+                  className="w-full transition-transform duration-300 hover:scale-105"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button 
+                  className="w-full transition-transform duration-300 hover:scale-105"
+                >
+                  Register
+                </Button>
+              </Link>
             </div>
           </div>
         )}
