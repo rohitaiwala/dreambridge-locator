@@ -28,8 +28,8 @@ export const Hero = () => {
           </div>
           <div className="md:w-1/2 animate-float mt-8 md:mt-0">
             <img
-              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-              alt="Students studying"
+              src="/lovable-uploads/ba62e7af-e96d-47fe-b76a-83dd65993d6b.png"
+              alt="Classroom scene with students and teacher"
               className="rounded-lg shadow-2xl w-full max-w-lg mx-auto"
             />
           </div>
