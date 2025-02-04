@@ -38,17 +38,17 @@ const Community = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: "#212A31" }}>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8 text-primary animate-fade-in">
+          <h1 className="text-3xl font-bold text-center mb-8 text-[#D3D9D4] animate-fade-in">
             Join Our Student Community
           </h1>
           
           {!showChat ? (
             <div className="space-y-6 animate-fade-in">
-              <h2 className="text-xl text-center mb-4">Select Your Class</h2>
+              <h2 className="text-xl text-center mb-4 text-[#748D92]">Select Your Class</h2>
               <img 
                 src="/lovable-uploads/71d5625b-25db-42fe-9881-ff743972d880.png"
                 alt="Student Community Illustration"
@@ -58,14 +58,15 @@ const Community = () => {
                 {quotes.map((quote, index) => (
                   <div 
                     key={index}
-                    className="bg-accent/50 p-4 rounded-lg shadow-sm border border-accent"
+                    className="p-4 rounded-lg shadow-sm border"
+                    style={{ backgroundColor: "#2E3944", borderColor: "#124E66" }}
                   >
-                    <p className="text-sm italic text-muted-foreground">"{quote}"</p>
+                    <p className="text-sm italic text-[#748D92]">"{quote}"</p>
                   </div>
                 ))}
               </div>
               <Select onValueChange={handleClassSelect}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-[#2E3944] text-[#D3D9D4] border-[#124E66]">
                   <SelectValue placeholder="Select your class" />
                 </SelectTrigger>
                 <SelectContent>
@@ -82,15 +83,16 @@ const Community = () => {
             </div>
           ) : (
             <div className="space-y-6 animate-fade-in">
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h2 className="text-xl font-semibold mb-4">
+              <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: "#2E3944" }}>
+                <h2 className="text-xl font-semibold mb-4 text-[#D3D9D4]">
                   Community Chat for {selectedClass.includes("ug") 
                     ? `Undergraduate Year ${selectedClass.charAt(2)}` 
                     : `Class ${selectedClass}`}
                 </h2>
                 <Button 
                   onClick={handleJoinClick}
-                  className="w-full bg-primary hover:bg-primary/90 text-white animate-pulse"
+                  className="w-full hover:bg-[#124E66] text-[#D3D9D4] animate-pulse"
+                  style={{ backgroundColor: "#124E66" }}
                 >
                   Join Now
                 </Button>
