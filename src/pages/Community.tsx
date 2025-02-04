@@ -88,12 +88,6 @@ const Community = () => {
                     ? `Undergraduate Year ${selectedClass.charAt(2)}` 
                     : `Class ${selectedClass}`}
                 </h2>
-                <div className="h-96 bg-gray-50 rounded-lg mb-4 p-4">
-                  {/* Chat messages will be displayed here */}
-                  <div className="text-center text-gray-500 mt-32">
-                    Join the community to see messages
-                  </div>
-                </div>
                 <Button 
                   onClick={handleJoinClick}
                   className="w-full bg-primary hover:bg-primary/90 text-white animate-pulse"
