@@ -31,6 +31,12 @@ const Community = () => {
     // Add join community logic here
   };
 
+  const quotes = [
+    "Empowering students with the knowledge and resources to unlock their true potential, no matter their board or background.",
+    "Uniting passionate students by providing a platform where knowledge, opportunities, and guidance are easily accessible.",
+    "Building a community where passion and skills are the primary drivers of success, not the board they belong to."
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -48,6 +54,16 @@ const Community = () => {
                 alt="Student Community Illustration"
                 className="w-full rounded-lg shadow-lg mb-6 animate-fade-in"
               />
+              <div className="space-y-4 mb-6">
+                {quotes.map((quote, index) => (
+                  <div 
+                    key={index}
+                    className="bg-accent/50 p-4 rounded-lg shadow-sm border border-accent"
+                  >
+                    <p className="text-sm italic text-muted-foreground">"{quote}"</p>
+                  </div>
+                ))}
+              </div>
               <Select onValueChange={handleClassSelect}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select your class" />
