@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, Home } from "lucide-react";
 import { useState } from "react";
 
 export const Navbar = () => {
@@ -75,6 +75,14 @@ export const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4 animate-accordion-down">
             <div className="flex flex-col space-y-2">
+              <Link 
+                to="/" 
+                className="text-gray-600 hover:text-primary hover:bg-gray-50 px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Home className="h-4 w-4" />
+                Home
+              </Link>
               <Link 
                 to="/tutors" 
                 className="text-gray-600 hover:text-primary hover:bg-gray-50 px-4 py-2 rounded-md transition-all duration-300"
