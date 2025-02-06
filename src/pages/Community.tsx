@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navbar } from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -7,34 +8,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/Navbar";
+import { useToast } from "@/components/ui/use-toast";
 
 const Community = () => {
-  const [selectedClass, setSelectedClass] = useState<string>("");
   const [showChat, setShowChat] = useState(false);
-  const navigate = useNavigate();
-  
-  const isLoggedIn = false; // This should be replaced with actual auth state
+  const [selectedClass, setSelectedClass] = useState("");
+  const { toast } = useToast();
 
   const handleClassSelect = (value: string) => {
     setSelectedClass(value);
-    setShowChat(true);
   };
 
   const handleJoinClick = () => {
-    if (!isLoggedIn) {
-      navigate("/signup");
-      return;
-    }
-    console.log("Joining community for class:", selectedClass);
-    // Add join community logic here
+    toast({
+      title: "Welcome to the community!",
+      description: "You've successfully joined the chat.",
+    });
+    setShowChat(true);
   };
+
+  // Memoize the class options to prevent unnecessary re-renders
+  const classOptions = [
+    { value: "11", label: "Class 11" },
+    { value: "12", label: "Class 12" },
+    { value: "ug1", label: "Undergraduate Year 1" },
+    { value: "ug2", label: "Undergraduate Year 2" },
+    { value: "ug3", label: "Undergraduate Year 3" },
+    { value: "ug4", label: "Undergraduate Year 4" },
+  ];
 
   const quotes = [
     "Empowering students with the knowledge and resources to unlock their true potential, no matter their board or background.",
     "Uniting passionate students by providing a platform where knowledge, opportunities, and guidance are easily accessible.",
-    "Building a community where passion and skills are the primary drivers of success, not the board they belong to."
+    "Building a community where passion and skills are the primary drivers of success, not the board they belong to.",
   ];
 
   return (
@@ -52,9 +58,12 @@ const Community = () => {
               <img 
                 src="/lovable-uploads/71d5625b-25db-42fe-9881-ff743972d880.png"
                 alt="Student Community Illustration"
-                className="w-full rounded-lg shadow-lg mb-6 animate-fade-in"
+                className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                loading="lazy"
+                width="400"
+                height="300"
               />
-              <div className="space-y-4 mb-6">
+              <div className="grid gap-4 mb-6">
                 {quotes.map((quote, index) => (
                   <div 
                     key={index}
@@ -70,14 +79,11 @@ const Community = () => {
                   <SelectValue placeholder="Select your class" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="9">Class 9</SelectItem>
-                  <SelectItem value="10">Class 10</SelectItem>
-                  <SelectItem value="11">Class 11</SelectItem>
-                  <SelectItem value="12">Class 12</SelectItem>
-                  <SelectItem value="ug1">Undergraduate Year 1</SelectItem>
-                  <SelectItem value="ug2">Undergraduate Year 2</SelectItem>
-                  <SelectItem value="ug3">Undergraduate Year 3</SelectItem>
-                  <SelectItem value="ug4">Undergraduate Year 4</SelectItem>
+                  {classOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
