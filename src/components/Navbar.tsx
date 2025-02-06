@@ -77,11 +77,13 @@ export const Navbar = () => {
             <div className="flex flex-col space-y-2">
               <Link 
                 to="/" 
-                className="text-gray-600 hover:text-primary hover:bg-gray-50 px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2"
+                className="text-gray-600 hover:text-primary hover:bg-gray-50 px-4 py-2 rounded-md transition-all duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Home className="h-4 w-4" />
-                Home
+                <div className="flex items-center gap-2">
+                  <Home className="h-4 w-4" />
+                  <span>Home</span>
+                </div>
               </Link>
               <Link 
                 to="/tutors" 
