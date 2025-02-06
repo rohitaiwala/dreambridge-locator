@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,20 +15,32 @@ const Community = () => {
   const [showChat, setShowChat] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Simulated auth check - replace with your actual auth logic
+  const isUserRegistered = () => {
+    const user = localStorage.getItem("user");
+    return !!user;
+  };
 
   const handleClassSelect = (value: string) => {
     setSelectedClass(value);
   };
 
   const handleJoinClick = () => {
-    toast({
-      title: "Welcome to the community!",
-      description: "You've successfully joined the chat.",
-    });
-    setShowChat(true);
+    if (!isUserRegistered()) {
+      toast({
+        title: "Authentication Required",
+        description: "Please register or login to join the chat.",
+        variant: "destructive",
+      });
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/chat/${selectedClass}`);
   };
 
-  // Memoize the class options to prevent unnecessary re-renders
   const classOptions = [
     { value: "11", label: "Class 11" },
     { value: "12", label: "Class 12" },
@@ -52,59 +65,47 @@ const Community = () => {
             Join Our Student Community
           </h1>
           
-          {!showChat ? (
-            <div className="space-y-6 animate-fade-in">
-              <h2 className="text-xl text-center mb-4 text-[#748D92]">Select Your Class</h2>
-              <img 
-                src="/lovable-uploads/71d5625b-25db-42fe-9881-ff743972d880.png"
-                alt="Student Community Illustration"
-                className="w-full max-w-md mx-auto rounded-lg shadow-lg"
-                loading="lazy"
-                width="400"
-                height="300"
-              />
-              <div className="grid gap-4 mb-6">
-                {quotes.map((quote, index) => (
-                  <div 
-                    key={index}
-                    className="p-4 rounded-lg shadow-sm border"
-                    style={{ backgroundColor: "#2E3944", borderColor: "#124E66" }}
-                  >
-                    <p className="text-sm italic text-[#D3D9D4]">{quote}</p>
-                  </div>
-                ))}
-              </div>
-              <Select onValueChange={handleClassSelect}>
-                <SelectTrigger className="w-full bg-[#2E3944] text-[#D3D9D4] border-[#124E66]">
-                  <SelectValue placeholder="Select your class" />
-                </SelectTrigger>
-                <SelectContent>
-                  {classOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          ) : (
-            <div className="space-y-6 animate-fade-in">
-              <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: "#2E3944" }}>
-                <h2 className="text-xl font-semibold mb-4 text-[#D3D9D4]">
-                  Community Chat for {selectedClass.includes("ug") 
-                    ? `Undergraduate Year ${selectedClass.charAt(2)}` 
-                    : `Class ${selectedClass}`}
-                </h2>
-                <Button 
-                  onClick={handleJoinClick}
-                  className="w-full hover:bg-[#124E66] text-[#D3D9D4] animate-pulse"
-                  style={{ backgroundColor: "#124E66" }}
+          <div className="space-y-6 animate-fade-in">
+            <h2 className="text-xl text-center mb-4 text-[#D3D9D4]">Select Your Class</h2>
+            <img 
+              src="/lovable-uploads/71d5625b-25db-42fe-9881-ff743972d880.png"
+              alt="Student Community Illustration"
+              className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+              loading="lazy"
+              width="400"
+              height="300"
+            />
+            <div className="grid gap-4 mb-6">
+              {quotes.map((quote, index) => (
+                <div 
+                  key={index}
+                  className="p-4 rounded-lg shadow-sm border"
+                  style={{ backgroundColor: "#2E3944", borderColor: "#124E66" }}
                 >
-                  Join Now
-                </Button>
-              </div>
+                  <p className="text-sm italic text-[#D3D9D4]">{quote}</p>
+                </div>
+              ))}
             </div>
-          )}
+            <Select onValueChange={handleClassSelect}>
+              <SelectTrigger className="w-full bg-[#2E3944] text-[#D3D9D4] border-[#124E66]">
+                <SelectValue placeholder="Select your class" />
+              </SelectTrigger>
+              <SelectContent>
+                {classOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button 
+              onClick={handleJoinClick}
+              className="w-full hover:bg-[#124E66] text-[#D3D9D4]"
+              style={{ backgroundColor: "#124E66" }}
+            >
+              Join Chat Room
+            </Button>
+          </div>
         </div>
       </div>
     </div>
