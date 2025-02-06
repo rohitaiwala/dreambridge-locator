@@ -70,7 +70,7 @@ const Community = () => {
                     className="p-4 rounded-lg shadow-sm border"
                     style={{ backgroundColor: "#2E3944", borderColor: "#124E66" }}
                   >
-                    <p className="text-sm italic text-[#748D92]">"{quote}"</p>
+                    <p className="text-sm italic text-[#D3D9D4]">{quote}</p>
                   </div>
                 ))}
               </div>
