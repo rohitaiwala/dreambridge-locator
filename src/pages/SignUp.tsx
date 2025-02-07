@@ -61,11 +61,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F2F5] dark:bg-gray-900 transition-all duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-[#5680E9] via-[#84CEEB] to-[#8860D0] dark:bg-gray-900 transition-all duration-300">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto bg-white dark:bg-gray-800 p-8 rounded-[30px] shadow-lg transform transition-all duration-300 hover:shadow-xl">
-          <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
+        <div className="max-w-md mx-auto bg-white/90 dark:bg-gray-800 p-8 rounded-[30px] shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-xl">
+          <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#5680E9] to-[#8860D0] bg-clip-text text-transparent">
             Create Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -91,7 +91,7 @@ const SignUp = () => {
                   onChange={handleChange}
                   required={field.required !== false}
                   placeholder={field.placeholder}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#5680E9] dark:bg-gray-700 dark:text-white transition-all duration-300 bg-white/80"
                 />
               </div>
             ))}
@@ -118,14 +118,14 @@ const SignUp = () => {
 
             <Button 
               type="submit" 
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#5680E9] to-[#8860D0] text-white font-semibold transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
             >
               Sign Up
             </Button>
 
             <p className="text-center text-gray-600 dark:text-gray-300 mt-4">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-500 hover:text-blue-600 font-semibold">
+              <Link to="/login" className="text-[#5680E9] hover:text-[#8860D0] font-semibold">
                 Sign In
               </Link>
             </p>
