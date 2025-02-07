@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -60,11 +61,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#F0F2F5] dark:bg-gray-900 transition-all duration-300">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-          <h1 className="text-3xl font-bold text-center mb-8 text-primary">
+        <div className="max-w-md mx-auto bg-white dark:bg-gray-800 p-8 rounded-[30px] shadow-lg transform transition-all duration-300 hover:shadow-xl">
+          <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
             Create Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -78,8 +79,10 @@ const SignUp = () => {
               { label: "Password", name: "password", type: "password", placeholder: "Enter password (min 6 characters)" },
               { label: "Confirm Password", name: "confirmPassword", type: "password", placeholder: "Confirm your password" },
             ].map((field) => (
-              <div key={field.name}>
-                <Label htmlFor={field.name}>{field.label}</Label>
+              <div key={field.name} className="space-y-2">
+                <Label htmlFor={field.name} className="text-gray-600 dark:text-gray-300">
+                  {field.label}
+                </Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -88,12 +91,13 @@ const SignUp = () => {
                   onChange={handleChange}
                   required={field.required !== false}
                   placeholder={field.placeholder}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-300"
                 />
               </div>
             ))}
 
             <div className="space-y-3">
-              <Label>Role</Label>
+              <Label className="text-gray-600 dark:text-gray-300">Role</Label>
               <RadioGroup
                 value={formData.role}
                 onValueChange={(value: UserRole) => setFormData(prev => ({ ...prev, role: value }))}
@@ -101,11 +105,11 @@ const SignUp = () => {
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="student" id="student" />
-                  <Label htmlFor="student">Student</Label>
+                  <Label htmlFor="student" className="dark:text-gray-300">Student</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="tutor" id="tutor" />
-                  <Label htmlFor="tutor">Tutor</Label>
+                  <Label htmlFor="tutor" className="dark:text-gray-300">Tutor</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -114,10 +118,17 @@ const SignUp = () => {
 
             <Button 
               type="submit" 
-              className="w-full transform transition-transform hover:scale-105 active:scale-95 bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
             >
               Sign Up
             </Button>
+
+            <p className="text-center text-gray-600 dark:text-gray-300 mt-4">
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-500 hover:text-blue-600 font-semibold">
+                Sign In
+              </Link>
+            </p>
           </form>
         </div>
       </div>
