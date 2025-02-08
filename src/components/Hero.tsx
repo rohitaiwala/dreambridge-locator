@@ -1,9 +1,10 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <section className="bg-background py-12 md:py-24">
+    <section className="bg-background py-16 md:py-32">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-6 lg:gap-12">
           <div className="md:w-1/2 space-y-4">
