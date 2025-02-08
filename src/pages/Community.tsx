@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -25,9 +26,22 @@ const Community = () => {
 
   const handleClassSelect = (value: string) => {
     setSelectedClass(value);
+    toast({
+      title: "Class Selected",
+      description: "You can now join the chat room!",
+    });
   };
 
   const handleJoinClick = () => {
+    if (!selectedClass) {
+      toast({
+        title: "Select a Class",
+        description: "Please select your class before joining the chat room.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!isUserRegistered()) {
       toast({
         title: "Authentication Required",
@@ -100,10 +114,15 @@ const Community = () => {
             </Select>
             <Button 
               onClick={handleJoinClick}
-              className="w-full hover:bg-[#124E66] text-[#D3D9D4]"
+              className={`w-full text-[#D3D9D4] ${
+                !selectedClass 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'hover:bg-[#124E66]'
+              }`}
               style={{ backgroundColor: "#124E66" }}
+              disabled={!selectedClass}
             >
-              Join Chat Room
+              {selectedClass ? 'Join Chat Room' : 'Please Select a Class First'}
             </Button>
           </div>
         </div>
