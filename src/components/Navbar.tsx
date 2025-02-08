@@ -8,13 +8,11 @@ import { Switch } from "@/components/ui/switch";
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check if user has a theme preference in localStorage
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
 
   useEffect(() => {
-    // Update the document class and localStorage when theme changes
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -35,34 +33,36 @@ export const Navbar = () => {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-4 items-center">
-            <Link 
-              to="/tutors" 
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-            >
-              Find Tutors
-            </Link>
-            <Link 
-              to="/tasks" 
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-            >
-              Tasks
-            </Link>
-            <Link 
-              to="/community" 
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-            >
-              Community
-            </Link>
-            <Link 
-              to="/resources" 
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-            >
-              Resources
-            </Link>
+          <div className="hidden md:flex items-center space-x-8">
+            <div className="flex items-center space-x-6">
+              <Link 
+                to="/tutors" 
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
+                Find Tutors
+              </Link>
+              <Link 
+                to="/tasks" 
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
+                Tasks
+              </Link>
+              <Link 
+                to="/community" 
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
+                Community
+              </Link>
+              <Link 
+                to="/resources" 
+                className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              >
+                Resources
+              </Link>
+            </div>
 
             {/* Theme Toggle */}
-            <div className="flex items-center space-x-2 ml-4">
+            <div className="flex items-center space-x-2">
               <Switch
                 checked={isDarkMode}
                 onCheckedChange={setIsDarkMode}
@@ -75,24 +75,24 @@ export const Navbar = () => {
                 <Sun className="h-4 w-4 text-gray-600" />
               )}
             </div>
-          </div>
-          
-          <div className="hidden md:flex space-x-4">
-            <Link to="/login">
-              <Button 
-                variant="outline"
-                className="transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600"
-              >
-                Login
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button 
-                className="transition-transform duration-300 hover:scale-105 animate-fade-in"
-              >
-                Register
-              </Button>
-            </Link>
+
+            <div className="flex items-center space-x-4">
+              <Link to="/login">
+                <Button 
+                  variant="outline"
+                  className="transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button 
+                  className="transition-transform duration-300 hover:scale-105 animate-fade-in"
+                >
+                  Register
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -106,7 +106,7 @@ export const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-4 animate-accordion-down dark:bg-gray-900">
+          <div className="md:hidden py-4 animate-accordion-down dark:bg-gray-900">
             <div className="flex flex-col space-y-2">
               <Link 
                 to="/" 
