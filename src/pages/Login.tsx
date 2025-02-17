@@ -33,7 +33,7 @@ const Login = () => {
           </h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="mobile" className="text-gray-600">
+              <Label htmlFor="mobile" className="text-white-600">
                 Mobile Number
               </Label>
               <Input
@@ -44,12 +44,12 @@ const Login = () => {
                 onChange={(e) => setFormData((prev) => ({ ...prev, mobile: e.target.value }))}
                 required
                 placeholder="Enter your mobile number"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-xl border border-white-200 focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-600">
+              <Label htmlFor="password" className="text-white-600">
                 Password
               </Label>
               <Input
@@ -60,7 +60,7 @@ const Login = () => {
                 onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
                 required
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-xl border border-white-200 focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
