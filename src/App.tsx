@@ -30,7 +30,7 @@ function App() {
 
         {/* Chatbot Icon */}
         <div className="chat-icon" onClick={() => setShowChat(!showChat)}>
-          🗨️ {/* Replace with a chatbot icon image */}
+          <img src="/—Pngtree—smart chatbot cartoon clipart_9015126" alt="Chatbot" className="chatbot-img" />
         </div>
 
         {/* Chatbot Window */}
