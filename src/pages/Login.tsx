@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F2F5] transition-all duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-[#5680E9] via-[#84CEEB] to-[#8860D0] dark:bg-gray-900 transition-all duration-300">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto bg-white p-8 rounded-[30px] shadow-lg transform transition-all duration-300 hover:shadow-xl">
