@@ -1,91 +1,157 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Navbar } from "@/components/Navbar";
-import { Input } from "@/components/ui/input";
+import { Navigation } from "@/components/Navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { Label } from "@/components/ui/label";
-import { Captcha } from "@/components/ui/captcha";
-import { Link } from "react-router-dom";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const formSchema = z.object({
+  username: z.string().min(2, "Please enter your username/email"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 const Login = () => {
-  const [formData, setFormData] = useState({ mobile: "", password: "" });
-  const [userCaptcha, setUserCaptcha] = useState("");
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { login } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    toast({
-      title: "Login successful!",
-      description: "Welcome back!",
-    });
-    navigate("/community");
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!captchaValue) {
+      toast({
+        title: "Error",
+        description: "Please complete the reCAPTCHA verification.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const adminUsername = process.env.REACT_APP_ADMIN_USERNAME;
+    const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+
+    try {
+      console.log("Login attempt:", values);
+      if (values.username === adminUsername && values.password === adminPassword) {
+        login(values.username);
+        toast({
+          title: "Welcome back!",
+          description: `Successfully logged in as ${values.username}`,
+        });
+        navigate("/");
+      } else {
+        throw new Error("Invalid credentials");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Invalid username or password.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#5680E9] via-[#84CEEB] to-[#8860D0] dark:bg-gray-900 transition-all duration-300">
-      <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-[30px] shadow-lg transform transition-all duration-300 hover:shadow-xl">
-          <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
-            Sign In
-          </h1>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="mobile" className="text-white-600">
-                Mobile Number
-              </Label>
-              <Input
-                id="mobile"
-                name="mobile"
-                type="tel"
-                value={formData.mobile}
-                onChange={(e) => setFormData((prev) => ({ ...prev, mobile: e.target.value }))}
-                required
-                placeholder="Enter your mobile number"
-                className="w-full px-4 py-3 rounded-xl border border-white-200 focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+    <div className="min-h-screen bg-[#F1F0FB] dark:bg-[#1A202C]">
+      <Navigation />
+      <div className="container mx-auto px-4 py-8 md:py-16">
+        <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 space-y-6 animate-fade-in">
+          <div className="text-center space-y-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Welcome Back</h1>
+            <p className="text-gray-500 dark:text-gray-400">Login to your account</p>
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-white-600">
-                Password
-              </Label>
-              <Input
-                id="password"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300">Username/Email</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter your username or email" 
+                        className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#1EAEDB] focus:ring-[#1EAEDB]" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
-                required
-                placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-xl border border-white-200 focus:ring-2 focus:ring-blue-500"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300">Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input 
+                          type={showPassword ? "text" : "password"} 
+                          placeholder="Enter your password" 
+                          className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#1EAEDB] focus:ring-[#1EAEDB]"
+                          {...field} 
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                          ) : (
+                            <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                          )}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <div className="text-right">
-              <Link to="/forgot-password" className="text-blue-500 hover:text-blue-600 text-sm">
-                Forgot Password?
-              </Link>
-            </div>
+              <div className="flex justify-center my-4">
+                <ReCAPTCHA
+                  sitekey="YOUR_RECAPTCHA_SITE_KEY"
+                  theme="dark"
+                  onChange={(value) => setCaptchaValue(value)}
+                />
+              </div>
 
-            <Captcha value={userCaptcha} onChange={setUserCaptcha} />
+              <Button 
+                type="submit" 
+                className="w-full bg-[#1EAEDB] hover:bg-[#1a9bc4] text-white rounded-xl py-2.5"
+              >
+                Login
+              </Button>
+            </form>
+          </Form>
 
-            <Button 
-              type="submit" 
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-            >
-              Sign In
-            </Button>
-
-            <p className="text-center text-white-600 mt-4">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-500 hover:text-blue-600 font-semibold">
-                Sign Up
-              </Link>
-            </p>
-          </form>
+          <div className="text-center text-sm">
+            <span className="text-gray-500 dark:text-gray-400">Don't have an account? </span>
+            <Link to="/register" className="text-[#1EAEDB] hover:underline font-medium">
+              Register here
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -93,4 +159,3 @@ const Login = () => {
 };
 
 export default Login;
-
