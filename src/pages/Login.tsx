@@ -89,7 +89,7 @@ const Login = () => {
                       <FormMessage />
                     </FormItem>} />
 
-                <Button type="submit" className="w-full bg-[#FF69B4] hover:bg-[#FF5FA9] text-white rounded-xl py-3 font-semibold mt-6">
+                <Button type="submit" className="w-full text-white rounded-xl py-3 font-semibold mt-6 bg-red-950 hover:bg-red-800">
                   LOGIN
                 </Button>
 
