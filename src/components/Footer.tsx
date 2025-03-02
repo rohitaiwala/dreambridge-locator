@@ -1,10 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { Github, Twitter, Facebook, Linkedin, Mail } from "lucide-react";
-
 export const Footer = () => {
-  return (
-    <footer className="relative w-full">
+  return <footer className="relative w-full">
       {/* AI-inspired decorative element */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#1A1F2C] to-[#403E43] opacity-95" />
       
@@ -76,7 +73,7 @@ export const Footer = () => {
 
           <div className="space-y-3">
             <h4 className="font-semibold text-white">Connect With Us</h4>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mx-[89px]">
               <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
                 <Github className="h-5 w-5" />
               </a>
@@ -113,6 +110,5 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
