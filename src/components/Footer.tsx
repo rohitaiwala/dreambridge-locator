@@ -8,7 +8,7 @@ export const Footer = () => {
       {/* Neural network pattern overlay */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(155,135,245,0.2)_1px,transparent_1px)] bg-[length:20px_20px]" />
 
-      <div className="relative container mx-auto px-4 py-12">
+      <div className="relative container mx-auto px-4 py-12 bg-gray-950">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-300">
           <div className="space-y-4">
             <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#9b87f5] to-[#1EAEDB]">
