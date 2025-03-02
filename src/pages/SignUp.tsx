@@ -74,7 +74,7 @@ const SignUp = () => {
                 <Label htmlFor="email" className="text-[#2D3A3A] dark:text-gray-300 font-medium">
                   Email
                 </Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required placeholder="Enter your email" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90" />
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required placeholder="Enter your email" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-gray-950" />
               </div>
 
               <div className="space-y-2">
