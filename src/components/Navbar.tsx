@@ -94,7 +94,7 @@ export const Navbar = () => {
               </Link>
 
               {/* Mobile Theme Toggle */}
-              <div className="flex items-center justify-between px-4 py-2">
+              <div className="flex items-center justify-between py-2 px-0 mx-[79px]">
                 <span className="text-gray-600 dark:text-gray-300">Dark Mode</span>
                 <div className="flex items-center space-x-2">
                   <Switch checked={isDarkMode} onCheckedChange={setIsDarkMode} className="data-[state=checked]:bg-primary" />
