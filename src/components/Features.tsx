@@ -1,26 +1,32 @@
 
-import { BookOpen, Users, Award, Target } from "lucide-react";
+import { BookOpen, Users, Award, Target, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const features = [
   {
     icon: BookOpen,
     title: "Offline Tutoring",
     description: "Connect with qualified tutors in your area for personalized learning experiences.",
+    link: "/tutors"
   },
   {
     icon: Users,
     title: "Student Community",
     description: "Join the largest student community for support, guidance, and networking.",
+    link: "/community"
   },
   {
     icon: Award,
     title: "Task Marketplace",
     description: "Find opportunities to earn while learning through our task marketplace.",
+    link: "/tasks"
   },
   {
     icon: Target,
     title: "Career Guidance",
     description: "Get personalized career recommendations and guidance for your future.",
+    link: "/resources"
   },
 ];
 
@@ -41,7 +47,15 @@ export const Features = () => {
                 <feature.icon className="w-6 h-6 text-primary dark:text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2 text-center dark:text-white">{feature.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">{feature.description}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-center mb-4">{feature.description}</p>
+              <div className="flex justify-center">
+                <Link to={feature.link}>
+                  <Button variant="outline" size="sm" className="mt-2 flex items-center gap-2">
+                    Click here
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>
