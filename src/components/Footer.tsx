@@ -71,7 +71,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 bg-[#441e40]">
             <h4 className="font-semibold text-white">Connect With Us</h4>
             <div className="flex space-x-4 mx-[89px]">
               <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
@@ -101,12 +101,7 @@ export const Footer = () => {
             <p className="text-sm text-gray-400">
               © 2024 StudentConnect. All rights reserved.
             </p>
-            <div className="text-sm text-gray-400">
-              Powered by {" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9b87f5] to-[#1EAEDB]">
-                AI Technology
-              </span>
-            </div>
+            
           </div>
         </div>
       </div>
