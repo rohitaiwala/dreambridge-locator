@@ -1,27 +1,26 @@
-import { Navigation } from "@/components/Navigation";
+
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const formSchema = z.object({
   username: z.string().min(2, "Please enter your username/email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const { toast } = useToast();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,15 +31,6 @@ const Login = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!captchaValue) {
-      toast({
-        title: "Error",
-        description: "Please complete the reCAPTCHA verification.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     const adminUsername = process.env.REACT_APP_ADMIN_USERNAME;
     const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
 
@@ -66,13 +56,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F0FB] dark:bg-[#1A202C]">
-      <Navigation />
-      <div className="container mx-auto px-4 py-8 md:py-16">
-        <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 space-y-6 animate-fade-in">
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">Welcome Back</h1>
-            <p className="text-gray-500 dark:text-gray-400">Login to your account</p>
+    <div className="min-h-screen bg-[#FFDEE2] dark:bg-[#1A202C] flex items-center justify-center">
+      <div className="w-full max-w-md mx-auto px-6">
+        <div className="bg-[#FDE1D3]/80 dark:bg-gray-800 rounded-3xl shadow-lg p-8 border-2 border-amber-300">
+          <div className="text-center space-y-2 mb-6">
+            <h1 className="text-3xl font-bold text-[#2D3A3A] dark:text-gray-100">LOGIN</h1>
           </div>
 
           <Form {...form}>
@@ -82,11 +70,11 @@ const Login = () => {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-700 dark:text-gray-300">Username/Email</FormLabel>
+                    <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Email</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="Enter your username or email" 
-                        className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#1EAEDB] focus:ring-[#1EAEDB]" 
+                        placeholder="Enter your email" 
+                        className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90" 
                         {...field} 
                       />
                     </FormControl>
@@ -100,13 +88,13 @@ const Login = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-700 dark:text-gray-300">Password</FormLabel>
+                    <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Password</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input 
                           type={showPassword ? "text" : "password"} 
                           placeholder="Enter your password" 
-                          className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#1EAEDB] focus:ring-[#1EAEDB]"
+                          className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90"
                           {...field} 
                         />
                         <Button
@@ -129,29 +117,21 @@ const Login = () => {
                 )}
               />
 
-              <div className="flex justify-center my-4">
-                <ReCAPTCHA
-                  sitekey="YOUR_RECAPTCHA_SITE_KEY"
-                  theme="dark"
-                  onChange={(value) => setCaptchaValue(value)}
-                />
-              </div>
-
               <Button 
                 type="submit" 
-                className="w-full bg-[#1EAEDB] hover:bg-[#1a9bc4] text-white rounded-xl py-2.5"
+                className="w-full bg-[#FF69B4] hover:bg-[#FF5FA9] text-white rounded-xl py-3 font-semibold mt-6"
               >
-                Login
+                LOGIN
               </Button>
+
+              <div className="text-center mt-4">
+                <span className="text-[#2D3A3A] dark:text-gray-400">Don't have an account? </span>
+                <Link to="/signup" className="text-[#206269] hover:underline font-semibold">
+                  Sign Up Here!
+                </Link>
+              </div>
             </form>
           </Form>
-
-          <div className="text-center text-sm">
-            <span className="text-gray-500 dark:text-gray-400">Don't have an account? </span>
-            <Link to="/register" className="text-[#1EAEDB] hover:underline font-medium">
-              Register here
-            </Link>
-          </div>
         </div>
       </div>
     </div>
