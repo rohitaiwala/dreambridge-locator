@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,37 +10,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
-
 const formSchema = z.object({
   username: z.string().min(2, "Please enter your username/email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters")
 });
-
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const {
+    login
+  } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const { toast } = useToast();
-  
+  const {
+    toast
+  } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      password: "",
-    },
+      password: ""
+    }
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const adminUsername = process.env.REACT_APP_ADMIN_USERNAME;
     const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-
     try {
       console.log("Login attempt:", values);
       if (values.username === adminUsername && values.password === adminPassword) {
         login(values.username);
         toast({
           title: "Welcome back!",
-          description: `Successfully logged in as ${values.username}`,
+          description: `Successfully logged in as ${values.username}`
         });
         navigate("/");
       } else {
@@ -51,13 +49,11 @@ const Login = () => {
       toast({
         title: "Error",
         description: "Invalid username or password.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
-
-  return (
-    <>
+  return <>
       <Navbar />
       <div className="min-h-screen bg-[#FFDEE2] dark:bg-[#1A202C] flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-6">
@@ -68,62 +64,32 @@ const Login = () => {
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="username" render={({
+                field
+              }) => <FormItem>
                       <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Email</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="Enter your email" 
-                          className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90" 
-                          {...field} 
-                        />
+                        <Input placeholder="Enter your email" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-gray-950" />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="password" render={({
+                field
+              }) => <FormItem>
                       <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Password</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Input 
-                            type={showPassword ? "text" : "password"} 
-                            placeholder="Enter your password" 
-                            className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90"
-                            {...field} 
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? (
-                              <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                            ) : (
-                              <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                            )}
+                          <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90" {...field} />
+                          <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
                           </Button>
                         </div>
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-[#FF69B4] hover:bg-[#FF5FA9] text-white rounded-xl py-3 font-semibold mt-6"
-                >
+                <Button type="submit" className="w-full bg-[#FF69B4] hover:bg-[#FF5FA9] text-white rounded-xl py-3 font-semibold mt-6">
                   LOGIN
                 </Button>
 
@@ -138,8 +104,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>
-  );
+    </>;
 };
-
 export default Login;
