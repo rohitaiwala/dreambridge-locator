@@ -82,7 +82,7 @@ const Community = () => {
               backgroundColor: "#2E3944",
               borderColor: "#124E66"
             }} className="p-4 rounded-lg shadow-sm border bg-[#063737]/[0.92]">
-                  <p className="text-sm italic text-[#D3D9D4]">{quote}</p>
+                  <p className="italic text-[#D3D9D4] text-xl text-center font-normal">{quote}</p>
                 </div>)}
             </div>
             <Select onValueChange={handleClassSelect}>
