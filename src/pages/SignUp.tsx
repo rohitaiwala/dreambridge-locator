@@ -94,7 +94,7 @@ const SignUp = () => {
                   Confirm Password
                 </Label>
                 <div className="relative">
-                  <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} required placeholder="Confirm your password" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white/90" />
+                  <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} required placeholder="Confirm your password" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-gray-950" />
                   <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                     {showConfirmPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
                   </Button>
