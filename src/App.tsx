@@ -23,7 +23,7 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/tutors" element={<Tutors />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/chatroom" element={<ChatRoom />} />
           <Route path="*" element={<NotFound />} />
