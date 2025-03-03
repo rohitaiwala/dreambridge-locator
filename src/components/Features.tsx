@@ -41,18 +41,26 @@ export const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 dark:shadow-gray-900"
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg 
+              shadow-[0_5px_15px_rgba(0,0,0,0.1)] 
+              dark:shadow-[0_5px_15px_rgba(0,0,0,0.3)]
+              transform-gpu transition-all duration-300 
+              hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.15),0_8px_10px_-6px_rgba(0,0,0,0.1)] 
+              dark:hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.4),0_8px_10px_-6px_rgba(0,0,0,0.2)]
+              hover:translate-y-[-5px] hover:bg-white/95 dark:hover:bg-gray-700/95"
             >
-              <div className="w-12 h-12 bg-primary/10 dark:bg-primary/5 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <div className="w-12 h-12 bg-primary/10 dark:bg-primary/5 rounded-full flex items-center justify-center mb-4 mx-auto transform transition-transform duration-300 group-hover:scale-110">
                 <feature.icon className="w-6 h-6 text-primary dark:text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2 text-center dark:text-white">{feature.title}</h3>
               <p className="text-gray-600 dark:text-gray-300 text-center mb-4">{feature.description}</p>
               <div className="flex justify-center">
                 <Link to={feature.link}>
-                  <Button variant="outline" size="sm" className="mt-2 flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="mt-2 flex items-center gap-2 
+                  transition-all duration-300 hover:bg-primary/10 dark:hover:bg-primary/20 
+                  hover:text-primary dark:hover:text-white">
                     Click here
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </div>
