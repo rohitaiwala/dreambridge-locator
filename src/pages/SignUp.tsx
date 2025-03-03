@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,10 +17,21 @@ const SignUp = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
   const navigate = useNavigate();
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+
+  // Check if passwords match whenever either password field changes
+  useEffect(() => {
+    // Only consider it a match if both fields have content and they match
+    const doPasswordsMatch = 
+      formData.password.length > 0 && 
+      formData.confirmPassword.length > 0 && 
+      formData.password === formData.confirmPassword;
+    
+    setPasswordsMatch(doPasswordsMatch);
+  }, [formData.password, formData.confirmPassword]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       name,
@@ -29,6 +42,7 @@ const SignUp = () => {
       [name]: value
     }));
   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -53,6 +67,17 @@ const SignUp = () => {
     });
     navigate("/login");
   };
+
+  // Dynamic border class based on password match state
+  const getPasswordBorderClass = () => {
+    if (formData.password.length === 0 && formData.confirmPassword.length === 0) {
+      return "border-amber-300 dark:border-gray-700";
+    }
+    return passwordsMatch 
+      ? "border-green-500 dark:border-green-500" 
+      : "border-amber-300 dark:border-gray-700";
+  };
+
   return <>
       <Navbar />
       <div className="min-h-screen bg-[#FFDEE2] dark:bg-[#1A202C] flex items-center justify-center">
@@ -82,7 +107,16 @@ const SignUp = () => {
                   Password
                 </Label>
                 <div className="relative">
-                  <Input id="password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} required placeholder="Enter your password" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" />
+                  <Input 
+                    id="password" 
+                    name="password" 
+                    type={showPassword ? "text" : "password"} 
+                    value={formData.password} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="Enter your password" 
+                    className={`rounded-xl ${getPasswordBorderClass()} focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950`} 
+                  />
                   <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
                   </Button>
@@ -94,11 +128,23 @@ const SignUp = () => {
                   Confirm Password
                 </Label>
                 <div className="relative">
-                  <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} required placeholder="Confirm your password" className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" />
+                  <Input 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    value={formData.confirmPassword} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="Confirm your password" 
+                    className={`rounded-xl ${getPasswordBorderClass()} focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950`} 
+                  />
                   <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                     {showConfirmPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
                   </Button>
                 </div>
+                {passwordsMatch && formData.password.length > 0 && (
+                  <p className="text-sm text-green-500">Passwords match!</p>
+                )}
               </div>
 
               <Button type="submit" className="w-full py-3 rounded-xl text-white font-semibold mt-4 bg-sky-950 hover:bg-sky-800">
