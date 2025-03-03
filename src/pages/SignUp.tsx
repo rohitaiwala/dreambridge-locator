@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -21,9 +20,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Check if passwords match whenever either password field changes
   useEffect(() => {
-    // Only consider it a match if both fields have content and they match
     const doPasswordsMatch = 
       formData.password.length > 0 && 
       formData.confirmPassword.length > 0 && 
@@ -47,8 +44,8 @@ const SignUp = () => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Error",
-        description: "Passwords do not match!",
+        title: "Passwords do not match!",
+        description: "Please make sure your passwords match.",
         variant: "destructive"
       });
       return;
@@ -68,7 +65,6 @@ const SignUp = () => {
     navigate("/login");
   };
 
-  // Dynamic border class based on password match state
   const getPasswordBorderClass = () => {
     if (formData.password.length === 0 && formData.confirmPassword.length === 0) {
       return "border-amber-300 dark:border-gray-700";
@@ -144,6 +140,9 @@ const SignUp = () => {
                 </div>
                 {passwordsMatch && formData.password.length > 0 && (
                   <p className="text-sm text-green-500">Passwords match!</p>
+                )}
+                {!passwordsMatch && formData.password.length > 0 && formData.confirmPassword.length > 0 && (
+                  <p className="text-sm text-red-500">Passwords do not match!</p>
                 )}
               </div>
 
