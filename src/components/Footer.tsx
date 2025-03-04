@@ -81,7 +81,7 @@ export const Footer = () => {
                 <Twitter className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Facebook className="h-5 w-5" />
+                <Facebook className="h-5 w-5 bg-sky-950" />
               </a>
               <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
                 <Linkedin className="h-5 w-5 bg-blue-700" />
