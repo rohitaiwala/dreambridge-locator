@@ -12,7 +12,7 @@ export const Hero = () => {
               Join our community of students and tutors. Get help with your studies, share knowledge,
               and achieve your academic goals.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start px-0 py-0 my-[15px]">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start my-[15px] px-0 py-[4px]">
               <Link to="/signup">
                 <Button className="bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   Get Started
