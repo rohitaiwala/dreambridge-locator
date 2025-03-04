@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,10 +47,13 @@ export const ResourceCards = () => {
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -109,7 +111,6 @@ export const ResourceCards = () => {
         ))}
       </div>
 
-      {/* Content sections that can be scrolled to */}
       {resources.map((resource, index) => {
         const sectionId = resource.link.substring(1);
         return (
@@ -117,7 +118,7 @@ export const ResourceCards = () => {
             key={index} 
             id={sectionId} 
             className={`min-h-screen flex flex-col items-center justify-center p-6 border-t border-gray-200 dark:border-gray-800 transition-all duration-500 ease-in-out ${
-              activeSection === sectionId ? 'opacity-100' : 'opacity-0 pointer-events-none h-0 overflow-hidden'
+              activeSection === sectionId ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none h-0 overflow-hidden'
             }`}
           >
             <h2 className="text-3xl font-bold mb-6 text-primary">{resource.title}</h2>
