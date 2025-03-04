@@ -2,6 +2,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
 
 const resources = [
   {
@@ -43,7 +44,10 @@ const resources = [
 ];
 
 export const ResourceCards = () => {
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
   const scrollToSection = (id: string) => {
+    setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -106,26 +110,41 @@ export const ResourceCards = () => {
       </div>
 
       {/* Content sections that can be scrolled to */}
-      {resources.map((resource, index) => (
-        <section 
-          key={index} 
-          id={resource.link.substring(1)} 
-          className="min-h-screen flex flex-col items-center justify-center p-6 border-t border-gray-200 dark:border-gray-800"
-        >
-          <h2 className="text-3xl font-bold mb-6 text-primary">{resource.title}</h2>
-          <div className="max-w-3xl mx-auto">
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              This section will contain detailed information about {resource.title.toLowerCase()}.
-              Content will be added in future updates.
-            </p>
-            <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500 dark:text-gray-400">
-                Content coming soon
+      {resources.map((resource, index) => {
+        const sectionId = resource.link.substring(1);
+        return (
+          <section 
+            key={index} 
+            id={sectionId} 
+            className={`min-h-screen flex flex-col items-center justify-center p-6 border-t border-gray-200 dark:border-gray-800 transition-all duration-500 ease-in-out ${
+              activeSection === sectionId ? 'opacity-100' : 'opacity-0 pointer-events-none h-0 overflow-hidden'
+            }`}
+          >
+            <h2 className="text-3xl font-bold mb-6 text-primary">{resource.title}</h2>
+            <div className="max-w-3xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                This section will contain detailed information about {resource.title.toLowerCase()}.
+                Content will be added in future updates.
               </p>
+              <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                <p className="text-gray-500 dark:text-gray-400">
+                  Content coming soon
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+            <Button
+              variant="outline"
+              onClick={() => setActiveSection(null)}
+              className="mt-8 transition-all duration-300 
+                bg-transparent hover:bg-primary/10 dark:hover:bg-primary/20 
+                hover:text-primary dark:hover:text-white
+                border-primary/20 hover:border-primary"
+            >
+              Back to Resources
+            </Button>
+          </section>
+        );
+      })}
     </div>
   );
 };
