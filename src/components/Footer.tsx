@@ -71,29 +71,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          <div className="space-y-3 bg-[#441e40] px-0 py-0 my-0 mx-[2px]">
-            <h4 className="font-semibold text-white">Connect With Us</h4>
-            <div className="flex space-x-4 mx-[89px]">
-              <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Github className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Facebook className="h-5 w-5 bg-sky-950" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Linkedin className="h-5 w-5 bg-blue-700" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-[#9b87f5] transition-colors duration-200">
-                <Mail className="h-5 w-5" />
-              </a>
-            </div>
-            <p className="text-sm opacity-75">
-              Stay updated with our latest features and announcements
-            </p>
-          </div>
+          
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-700">
