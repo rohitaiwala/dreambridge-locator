@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Resources from "./pages/Resources";
+import ResourceDetailPage from "./pages/ResourceDetail";
 import Community from "./pages/Community";
 import Tutors from "./pages/Tutors";
 import Login from "./pages/Login";
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/resources/:resourceId" element={<ResourceDetailPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/tutors" element={<Tutors />} />
           <Route path="/login" element={<Login />} />
