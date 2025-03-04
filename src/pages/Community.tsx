@@ -4,12 +4,11 @@ import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+
 const Community = () => {
   const [showChat, setShowChat] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   // Simulated auth check - replace with your actual auth logic
@@ -17,6 +16,7 @@ const Community = () => {
     const user = localStorage.getItem("user");
     return !!user;
   };
+
   const handleClassSelect = (value: string) => {
     setSelectedClass(value);
     toast({
@@ -24,6 +24,7 @@ const Community = () => {
       description: "You can now join the chat room!"
     });
   };
+
   const handleJoinClick = () => {
     if (!selectedClass) {
       toast({
@@ -33,17 +34,11 @@ const Community = () => {
       });
       return;
     }
-    if (!isUserRegistered()) {
-      toast({
-        title: "Authentication Required",
-        description: "Please register or login to join the chat.",
-        variant: "destructive"
-      });
-      navigate("/login");
-      return;
-    }
-    navigate(`/chat/${selectedClass}`);
+    
+    // Navigate to the join community page
+    navigate("/join-community");
   };
+
   const classOptions = [{
     value: "11",
     label: "Class 11"
@@ -64,6 +59,7 @@ const Community = () => {
     label: "Undergraduate Year 4"
   }];
   const quotes = ["Empowering students with the knowledge and resources to unlock their true potential, no matter their board or background.", "Uniting passionate students by providing a platform where knowledge, opportunities, and guidance are easily accessible.", "Building a community where passion and skills are the primary drivers of success, not the board they belong to."];
+
   return <div className="min-h-screen" style={{
     backgroundColor: "#212A31"
   }}>

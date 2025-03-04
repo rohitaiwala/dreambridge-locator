@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import Resources from "./pages/Resources";
 import ResourceDetailPage from "./pages/ResourceDetail";
 import Community from "./pages/Community";
+import JoinCommunity from "./pages/JoinCommunity";
 import Tutors from "./pages/Tutors";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/:resourceId" element={<ResourceDetailPage />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/join-community" element={<JoinCommunity />} />
           <Route path="/tutors" element={<Tutors />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
