@@ -1,24 +1,84 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+
+// Define user types
+export type UserRole = 'student' | 'tutor';
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: UserRole;
+  name: string;
+  profileImage?: string;
+}
 
 interface AuthContextType {
-  user: string | null;
-  login: (username: string) => void;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<string | null>(null);
+// Fake user database for testing - in a real app, this would come from Firebase
+const FAKE_USERS = [
+  {
+    id: '1',
+    username: 'student1',
+    email: 'student@test.com',
+    password: 'student123',
+    role: 'student' as UserRole,
+    name: 'John Student',
+    profileImage: 'https://i.pravatar.cc/150?img=1'
+  },
+  {
+    id: '2',
+    username: 'tutor1',
+    email: 'tutor@test.com',
+    password: 'tutor123',
+    role: 'tutor' as UserRole,
+    name: 'Jane Tutor',
+    profileImage: 'https://i.pravatar.cc/150?img=2'
+  }
+];
 
-  const login = (username: string) => {
-    setUser(username);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  // Check for saved user on mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Find user in our fake database
+    const foundUser = FAKE_USERS.find(
+      u => u.email === email && u.password === password
+    );
+
+    if (!foundUser) {
+      throw new Error('Invalid email or password');
+    }
+
+    // Create user object without password
+    const { password: _, ...userWithoutPassword } = foundUser;
+    
+    // Save user to state and localStorage
+    setUser(userWithoutPassword);
+    localStorage.setItem('user', JSON.stringify(userWithoutPassword));
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('user');
   };
 
   return (

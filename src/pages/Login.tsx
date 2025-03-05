@@ -13,91 +13,88 @@ import { Eye, EyeOff } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 
 const formSchema = z.object({
-  username: z.string().min(2, "Please enter your username/email"),
+  email: z.string().email("Please enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters")
 });
 
 const Login = () => {
   const navigate = useNavigate();
-  const {
-    login
-  } = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: ""
     }
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const adminUsername = process.env.REACT_APP_ADMIN_USERNAME;
-    const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
     try {
-      console.log("Login attempt:", values);
-      if (values.username === adminUsername && values.password === adminPassword) {
-        login(values.username);
-        toast({
-          title: "Welcome back!",
-          description: `Successfully logged in as ${values.username}`
-        });
-        navigate("/");
-      } else {
-        throw new Error("Invalid credentials");
-      }
+      await login(values.email, values.password);
+      toast({
+        title: "Welcome back!",
+        description: `Successfully logged in`
+      });
+      navigate("/profile");
     } catch (error) {
+      console.error("Login error:", error);
       toast({
         title: "Error",
-        description: "Invalid username or password.",
+        description: "Invalid email or password.",
         variant: "destructive"
       });
     }
   };
 
-  return <>
+  return (
+    <>
       <Navbar />
       <div className="min-h-screen bg-[#FFDEE2] dark:bg-[#1A202C] flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-6">
           <div className="bg-[#FDE1D3]/80 dark:bg-gray-800 rounded-3xl shadow-lg p-8 border-2 border-amber-300">
             <div className="text-center space-y-2 mb-6">
               <h1 className="text-3xl font-bold text-[#2D3A3A] dark:text-gray-100">LOGIN</h1>
+              
+              <div className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p><strong>Test Credentials:</strong></p>
+                <p>Student: student@test.com / student123</p>
+                <p>Tutor: tutor@test.com / tutor123</p>
+              </div>
             </div>
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField control={form.control} name="username" render={({
-                field
-              }) => <FormItem>
-                      <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your email" {...field} className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>} />
+                <FormField control={form.control} name="email" render={({ field }) => 
+                  <FormItem>
+                    <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your email" {...field} className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                } />
 
-                <FormField control={form.control} name="password" render={({
-                field
-              }) => <FormItem>
-                      <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showPassword ? "text" : "password"} 
-                            placeholder="Enter your password" 
-                            {...field}
-                            className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" 
-                          />
-                          <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)}>
-                            {showPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>} />
+                <FormField control={form.control} name="password" render={({ field }) => 
+                  <FormItem>
+                    <FormLabel className="text-[#2D3A3A] dark:text-gray-300 font-medium">Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input 
+                          type={showPassword ? "text" : "password"} 
+                          placeholder="Enter your password" 
+                          {...field}
+                          className="rounded-xl border-amber-300 dark:border-gray-700 focus:border-amber-400 focus:ring-amber-400 bg-white dark:bg-gray-950" 
+                        />
+                        <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <EyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                } />
 
                 <Button type="submit" className="w-full text-white rounded-xl py-3 font-semibold mt-6 bg-sky-950 hover:bg-sky-800">
                   LOGIN
@@ -114,7 +111,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>;
+    </>
+  );
 };
 
 export default Login;

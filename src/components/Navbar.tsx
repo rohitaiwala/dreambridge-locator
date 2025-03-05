@@ -1,14 +1,19 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, Home, Moon, Sun } from "lucide-react";
+import { Menu, Home, Moon, Sun, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
+import { useAuth } from "@/contexts/AuthContext";
+
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
+  const { user, logout } = useAuth();
+
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -18,6 +23,7 @@ export const Navbar = () => {
       localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
+
   return <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 animate-fade-in transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
@@ -52,16 +58,35 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Link to="/login">
-                <Button variant="outline" className="transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600">
-                  Login
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button className="transition-transform duration-300 hover:scale-105 animate-fade-in">
-                  Register
-                </Button>
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/profile">
+                    <Button variant="outline" className="transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600 flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      My Profile
+                    </Button>
+                  </Link>
+                  <Button 
+                    onClick={() => logout()} 
+                    className="transition-transform duration-300 hover:scale-105 animate-fade-in"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline" className="transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="transition-transform duration-300 hover:scale-105 animate-fade-in">
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -103,16 +128,35 @@ export const Navbar = () => {
               </div>
             </div>
             <div className="flex flex-col space-y-2 px-4">
-              <Link to="/login">
-                <Button variant="outline" className="w-full transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600">
-                  Login
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button className="w-full transition-transform duration-300 hover:scale-105">
-                  Register
-                </Button>
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/profile">
+                    <Button variant="outline" className="w-full transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600 flex items-center justify-center gap-2">
+                      <User className="h-4 w-4" />
+                      My Profile
+                    </Button>
+                  </Link>
+                  <Button 
+                    onClick={() => logout()} 
+                    className="w-full transition-transform duration-300 hover:scale-105"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline" className="w-full transition-transform duration-300 hover:scale-105 dark:text-white dark:border-gray-600">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="w-full transition-transform duration-300 hover:scale-105">
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>}
       </div>
