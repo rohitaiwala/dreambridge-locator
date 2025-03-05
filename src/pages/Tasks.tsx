@@ -1,6 +1,9 @@
+
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { Search, Plus, List } from "lucide-react";
+
 const Tasks = () => {
   return <div className="min-h-screen bg-background">
       <Navbar />
@@ -10,13 +13,15 @@ const Tasks = () => {
           <div className="flex flex-col items-center">
             <Card className="w-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
-                <CardTitle className="text-2xl text-center text-primary">Find Tasks</CardTitle>
+                <CardTitle className="text-2xl text-center text-primary flex justify-center items-center gap-2">
+                  <Search className="w-5 h-5" /> Find Tasks
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <p className="text-gray-600 mb-4 text-center">
                   Discover available tasks and assignments
                 </p>
-                <Link to="/signup" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
+                <Link to="/find-tasks" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
                   Click here
                 </Link>
               </CardContent>
@@ -26,13 +31,15 @@ const Tasks = () => {
           <div className="flex flex-col items-center">
             <Card className="w-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
-                <CardTitle className="text-2xl text-center text-primary"> Add your Tasks</CardTitle>
+                <CardTitle className="text-2xl text-center text-primary flex justify-center items-center gap-2">
+                  <Plus className="w-5 h-5" /> Add your Tasks
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <p className="text-gray-600 mb-4 text-center">
                   View and manage your current tasks
                 </p>
-                <Link to="/signup" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
+                <Link to="/add-tasks" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
                   Click here
                 </Link>
               </CardContent>
@@ -42,13 +49,15 @@ const Tasks = () => {
           <div className="flex flex-col items-center">
             <Card className="w-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
-                <CardTitle className="text-2xl text-center text-primary">Track Tasks</CardTitle>
+                <CardTitle className="text-2xl text-center text-primary flex justify-center items-center gap-2">
+                  <List className="w-5 h-5" /> Track Tasks
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <p className="text-gray-600 mb-4 text-center">
                   Monitor and track your task progress
                 </p>
-                <Link to="/signup" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
+                <Link to="/track-tasks" className="text-secondary hover:text-secondary/80 font-medium transition-colors duration-300">
                   Click here
                 </Link>
               </CardContent>

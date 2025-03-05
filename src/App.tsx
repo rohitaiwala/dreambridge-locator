@@ -12,6 +12,9 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Tasks from "./pages/Tasks";
+import FindTasks from "./pages/FindTasks";
+import AddTasks from "./pages/AddTasks";
+import TrackTasks from "./pages/TrackTasks";
 import ChatRoom from "./pages/ChatRoom";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
@@ -31,6 +34,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/find-tasks" element={<FindTasks />} />
+          <Route path="/add-tasks" element={<AddTasks />} />
+          <Route path="/track-tasks" element={<TrackTasks />} />
           <Route path="/chatroom" element={<ChatRoom />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
