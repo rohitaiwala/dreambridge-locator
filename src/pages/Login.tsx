@@ -56,12 +56,6 @@ const Login = () => {
           <div className="bg-[#FDE1D3]/80 dark:bg-gray-800 rounded-3xl shadow-lg p-8 border-2 border-amber-300">
             <div className="text-center space-y-2 mb-6">
               <h1 className="text-3xl font-bold text-[#2D3A3A] dark:text-gray-100">LOGIN</h1>
-              
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                <p><strong>Test Credentials:</strong></p>
-                <p>Student: student@test.com / student123</p>
-                <p>Tutor: tutor@test.com / tutor123</p>
-              </div>
             </div>
 
             <Form {...form}>
