@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, Home, Moon, Sun, User } from "lucide-react";
+import { Menu, Home, Moon, Sun, User, BookOpen, ClipboardList } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/contexts/AuthContext";
@@ -36,11 +36,19 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex items-center space-x-6 px-[44px]">
-              <Link to="/tutors" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
-                Find Tutors
-              </Link>
-              <Link to="/tasks" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
-                Tasks
+              {user?.role === 'tutor' ? (
+                <Link to="/class-requests" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left flex items-center gap-1">
+                  <BookOpen className="h-4 w-4" />
+                  <span>Class Requests</span>
+                </Link>
+              ) : (
+                <Link to="/tutors" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
+                  Find Tutors
+                </Link>
+              )}
+              <Link to="/tasks" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left flex items-center gap-1">
+                <ClipboardList className="h-4 w-4" />
+                <span>Tasks</span>
               </Link>
               <Link to="/community" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
                 Community
@@ -105,11 +113,19 @@ export const Navbar = () => {
                   <span>Home</span>
                 </div>
               </Link>
-              <Link to="/tutors" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300">
-                Find Tutors
-              </Link>
-              <Link to="/tasks" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300">
-                Tasks
+              {user?.role === 'tutor' ? (
+                <Link to="/class-requests" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 justify-center">
+                  <BookOpen className="h-4 w-4" />
+                  <span>Class Requests</span>
+                </Link>
+              ) : (
+                <Link to="/tutors" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300">
+                  Find Tutors
+                </Link>
+              )}
+              <Link to="/tasks" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 justify-center">
+                <ClipboardList className="h-4 w-4" />
+                <span>Tasks</span>
               </Link>
               <Link to="/community" className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2 rounded-md transition-all duration-300">
                 Community

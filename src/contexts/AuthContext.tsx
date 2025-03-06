@@ -11,6 +11,9 @@ export interface User {
   role: UserRole;
   name: string;
   profileImage?: string;
+  hasCompletedOnboarding?: boolean;
+  hasCompletedTest?: boolean;
+  testScore?: number;
 }
 
 interface AuthContextType {
@@ -18,6 +21,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  updateUser: (userData: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,7 +35,9 @@ const FAKE_USERS = [
     password: 'student123',
     role: 'student' as UserRole,
     name: 'John Student',
-    profileImage: 'https://i.pravatar.cc/150?img=1'
+    profileImage: 'https://i.pravatar.cc/150?img=1',
+    hasCompletedOnboarding: true,
+    hasCompletedTest: true
   },
   {
     id: '2',
@@ -40,7 +46,9 @@ const FAKE_USERS = [
     password: 'tutor123',
     role: 'tutor' as UserRole,
     name: 'Jane Tutor',
-    profileImage: 'https://i.pravatar.cc/150?img=2'
+    profileImage: 'https://i.pravatar.cc/150?img=2',
+    hasCompletedOnboarding: false,
+    hasCompletedTest: false
   }
 ];
 
@@ -54,6 +62,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(JSON.parse(savedUser));
     }
   }, []);
+
+  const updateUser = (userData: Partial<User>) => {
+    if (!user) return;
+    
+    const updatedUser = { ...user, ...userData };
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
 
   const login = async (email: string, password: string) => {
     // Simulate API call delay
@@ -82,7 +98,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
