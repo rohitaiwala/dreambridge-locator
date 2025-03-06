@@ -13,20 +13,21 @@ const ProfileAbout: React.FC<ProfileAboutProps> = ({
   aboutMe,
   setAboutMe,
 }) => {
-  // No need to display this when not editing - we're using ProfileBio instead
-  if (!isEditing) return null;
-  
   return (
     <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
       <h3 className="text-xl font-bold text-[#2D3A3A] dark:text-white mb-4">
-        Edit About Me
+        {isEditing ? "Edit About Me" : "About Me"}
       </h3>
-      <Textarea
-        value={aboutMe}
-        onChange={(e) => setAboutMe(e.target.value)}
-        className="w-full h-32 border-amber-300 bg-white/90 dark:bg-gray-900"
-        placeholder="Tell us about yourself..."
-      />
+      {isEditing ? (
+        <Textarea
+          value={aboutMe}
+          onChange={(e) => setAboutMe(e.target.value)}
+          className="w-full h-32 border-amber-300 bg-white/90 dark:bg-gray-900"
+          placeholder="Tell us about yourself..."
+        />
+      ) : (
+        <p className="text-gray-700 dark:text-gray-300">{aboutMe}</p>
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navbar } from "@/components/Navbar";
@@ -12,7 +13,6 @@ import ProfileLearningTime from "@/components/profile/ProfileLearningTime";
 import ProfileCourses from "@/components/profile/ProfileCourses";
 import ProfileTeachingHistory from "@/components/profile/ProfileTeachingHistory";
 import ProfileRewards from "@/components/profile/ProfileRewards";
-import ProfileBio from "@/components/profile/ProfileBio";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -53,29 +53,25 @@ const Profile = () => {
               </CardHeader>
               
               <CardContent className="pt-6 space-y-6">
-                <ProfileStats user={user} />
+                <ProfileStats user={user} isEditing={isEditing} />
                 
-                <ProfileBio user={user} />
+                <ProfileAbout 
+                  isEditing={isEditing}
+                  aboutMe={aboutMe}
+                  setAboutMe={setAboutMe}
+                />
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <ProfileSkills user={user} />
-                  <ProfileLearningTime user={user} />
+                  <ProfileSkills user={user} isEditing={isEditing} />
+                  <ProfileLearningTime user={user} isEditing={isEditing} />
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <ProfileCourses user={user} />
-                  <ProfileRewards user={user} />
+                  <ProfileCourses user={user} isEditing={isEditing} />
+                  <ProfileRewards user={user} isEditing={isEditing} />
                 </div>
                 
-                <ProfileTeachingHistory user={user} />
-                
-                {isEditing && (
-                  <ProfileAbout 
-                    isEditing={isEditing}
-                    aboutMe={aboutMe}
-                    setAboutMe={setAboutMe}
-                  />
-                )}
+                <ProfileTeachingHistory user={user} isEditing={isEditing} />
               </CardContent>
               
               <CardFooter>
