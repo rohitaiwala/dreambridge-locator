@@ -2,18 +2,20 @@
 import React from "react";
 import { User } from "@/contexts/AuthContext";
 import { Award, Star, Clock, BookOpen } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 interface ProfileRewardsProps {
   user: User | null;
+  isEditing?: boolean;
 }
 
-const ProfileRewards: React.FC<ProfileRewardsProps> = ({ user }) => {
-  const rewardIcons = [
+const ProfileRewards: React.FC<ProfileRewardsProps> = ({ user, isEditing = false }) => {
+  const [rewardIcons, setRewardIcons] = React.useState([
     { icon: <Award className="h-6 w-6 text-amber-500" />, achieved: true },
     { icon: <Star className="h-6 w-6 text-blue-500" />, achieved: true },
     { icon: <Clock className="h-6 w-6 text-green-500" />, achieved: true },
     { icon: <BookOpen className="h-6 w-6 text-purple-500" />, achieved: false }
-  ];
+  ]);
 
   return (
     <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
@@ -36,15 +38,27 @@ const ProfileRewards: React.FC<ProfileRewardsProps> = ({ user }) => {
       
       <div className="grid grid-cols-4 gap-4">
         {rewardIcons.map((reward, index) => (
-          <div 
-            key={index} 
-            className={`p-3 rounded-full flex items-center justify-center ${
-              reward.achieved 
-                ? "bg-amber-100 dark:bg-amber-900/30" 
-                : "bg-gray-100 dark:bg-gray-800 opacity-40"
-            }`}
-          >
-            {reward.icon}
+          <div key={index} className="flex flex-col items-center">
+            <div 
+              className={`p-3 rounded-full flex items-center justify-center ${
+                reward.achieved 
+                  ? "bg-amber-100 dark:bg-amber-900/30" 
+                  : "bg-gray-100 dark:bg-gray-800 opacity-40"
+              }`}
+            >
+              {reward.icon}
+            </div>
+            {isEditing && (
+              <Switch
+                checked={reward.achieved}
+                onCheckedChange={(checked) => {
+                  const updatedRewards = [...rewardIcons];
+                  updatedRewards[index] = { ...reward, achieved: checked };
+                  setRewardIcons(updatedRewards);
+                }}
+                className="mt-2"
+              />
+            )}
           </div>
         ))}
       </div>
@@ -52,7 +66,7 @@ const ProfileRewards: React.FC<ProfileRewardsProps> = ({ user }) => {
       <div className="grid grid-cols-4 gap-4 mt-4">
         {rewardIcons.map((reward, index) => (
           <div 
-            key={index} 
+            key={`bottom-${index}`}
             className={`p-3 rounded-full flex items-center justify-center ${
               !reward.achieved 
                 ? "bg-gray-100 dark:bg-gray-800 opacity-40" 

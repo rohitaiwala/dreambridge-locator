@@ -2,16 +2,20 @@
 import React from "react";
 import { User } from "@/contexts/AuthContext";
 import { Clock, Calendar } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface ProfileLearningTimeProps {
   user: User | null;
+  isEditing?: boolean;
 }
 
-const ProfileLearningTime: React.FC<ProfileLearningTimeProps> = ({ user }) => {
+const ProfileLearningTime: React.FC<ProfileLearningTimeProps> = ({ user, isEditing = false }) => {
   // Different metrics based on user role
-  const timeMetrics = user?.role === "student" 
-    ? { total: 180, unit: "jam", label: "Total Waktu Belajar" }
-    : { total: 240, unit: "jam", label: "Total Waktu Mengajar" };
+  const [timeMetrics, setTimeMetrics] = React.useState(
+    user?.role === "student" 
+      ? { total: 180, unit: "jam", label: "Total Waktu Belajar" }
+      : { total: 240, unit: "jam", label: "Total Waktu Mengajar" }
+  );
 
   return (
     <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
@@ -60,7 +64,16 @@ const ProfileLearningTime: React.FC<ProfileLearningTimeProps> = ({ user }) => {
           {/* Center text */}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-xs text-gray-500 dark:text-gray-400">Total</span>
-            <span className="text-3xl font-bold">{timeMetrics.total}</span>
+            {isEditing ? (
+              <Input
+                type="number"
+                value={timeMetrics.total}
+                onChange={(e) => setTimeMetrics({...timeMetrics, total: parseInt(e.target.value) || 0})}
+                className="text-center text-xl w-20 h-8 border-amber-300 bg-white/90 dark:bg-gray-900"
+              />
+            ) : (
+              <span className="text-3xl font-bold">{timeMetrics.total}</span>
+            )}
             <span className="text-sm text-gray-500 dark:text-gray-400">{timeMetrics.unit}</span>
           </div>
         </div>

@@ -2,28 +2,32 @@
 import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { User } from "@/contexts/AuthContext";
+import { Input } from "@/components/ui/input";
 
 interface ProfileSkillsProps {
   user: User | null;
+  isEditing?: boolean;
 }
 
-const ProfileSkills: React.FC<ProfileSkillsProps> = ({ user }) => {
+const ProfileSkills: React.FC<ProfileSkillsProps> = ({ user, isEditing = false }) => {
   // Different skills based on user role
-  const skills = user?.role === "student" 
-    ? [
-        { name: "Disiplin", value: 85 },
-        { name: "Kreatif", value: 75 },
-        { name: "Komunikasi", value: 90 },
-        { name: "Berpikir Kritis", value: 80 },
-        { name: "Kerjasama", value: 88 }
-      ]
-    : [
-        { name: "Pemecahan Masalah", value: 90 },
-        { name: "Komunikasi", value: 95 },
-        { name: "Kesabaran", value: 85 },
-        { name: "Kreativitas", value: 80 },
-        { name: "Adaptasi", value: 87 }
-      ];
+  const [skills, setSkills] = React.useState(
+    user?.role === "student" 
+      ? [
+          { name: "Disiplin", value: 85 },
+          { name: "Kreatif", value: 75 },
+          { name: "Komunikasi", value: 90 },
+          { name: "Berpikir Kritis", value: 80 },
+          { name: "Kerjasama", value: 88 }
+        ]
+      : [
+          { name: "Pemecahan Masalah", value: 90 },
+          { name: "Komunikasi", value: 95 },
+          { name: "Kesabaran", value: 85 },
+          { name: "Kreativitas", value: 80 },
+          { name: "Adaptasi", value: 87 }
+        ]
+  );
 
   return (
     <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
@@ -44,11 +48,27 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({ user }) => {
           : "Berdasarkan evaluasi dari siswa dan pengajaran"}
       </p>
       <div className="space-y-4">
-        {skills.map((skill) => (
+        {skills.map((skill, index) => (
           <div key={skill.name} className="space-y-1">
             <div className="flex justify-between text-sm">
               <span className="font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
-              <span className="text-gray-500 dark:text-gray-400">{skill.value}%</span>
+              {isEditing ? (
+                <Input 
+                  type="number" 
+                  value={skill.value}
+                  min="0"
+                  max="100"
+                  onChange={(e) => {
+                    const newValue = parseInt(e.target.value) || 0;
+                    const updatedSkills = [...skills];
+                    updatedSkills[index] = { ...skill, value: Math.min(100, Math.max(0, newValue)) };
+                    setSkills(updatedSkills);
+                  }}
+                  className="text-sm w-16 h-7 border-amber-300 bg-white/90 dark:bg-gray-900"
+                />
+              ) : (
+                <span className="text-gray-500 dark:text-gray-400">{skill.value}%</span>
+              )}
             </div>
             <Progress value={skill.value} className="h-2" 
               style={{
