@@ -66,7 +66,7 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-sm hover:text-[#9b87f5] transition-colors duration-200">
+                <Link to="/contact-us" className="text-sm hover:text-[#9b87f5] transition-colors duration-200">
                   Contact Us
                 </Link>
               </li>

@@ -18,6 +18,7 @@ import ChatRoom from "./pages/ChatRoom";
 import TutorOnboarding from "./pages/TutorOnboarding";
 import TutorTest from "./pages/TutorTest";
 import ClassRequests from "./pages/ClassRequests";
+import ContactUs from "./pages/ContactUs";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           
           {/* Protected Routes - Require Authentication */}
           <Route element={<ProtectedRoute />}>
