@@ -3,6 +3,12 @@ import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { User } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
+interface Skill {
+  name: string;
+  value: number;
+}
 
 interface ProfileSkillsProps {
   user: User | null;
@@ -14,7 +20,7 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   isEditing = false
 }) => {
   // Different skills based on user role
-  const [skills, setSkills] = React.useState(user?.role === "student" ? [{
+  const [skills, setSkills] = React.useState<Skill[]>(user?.role === "student" ? [{
     name: "Disiplin",
     value: 85
   }, {
@@ -46,10 +52,14 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
     value: 87
   }]);
 
-  const handleSkillChange = (index: number, field: 'name' | 'value', value: string | number) => {
+  const handleSkillChange = (index: number, field: keyof Skill, value: string | number) => {
     if (isEditing) {
       const newSkills = [...skills];
-      newSkills[index][field] = value;
+      if (field === 'name' && typeof value === 'string') {
+        newSkills[index].name = value;
+      } else if (field === 'value' && typeof value === 'number') {
+        newSkills[index].value = value;
+      }
       setSkills(newSkills);
     }
   };
@@ -122,7 +132,10 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
             <Progress
               value={skill.value}
               className="h-2"
-              indicatorClassName={`${getProgressColorClass(skill.value)}`}
+              // Use cn utility to apply dynamic classes based on the skill value
+              style={{ 
+                '--progress-background': getColorForValue(skill.value)
+              } as React.CSSProperties}
             />
           </div>
         ))}
