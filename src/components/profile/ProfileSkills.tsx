@@ -79,67 +79,62 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-      <h3 className="text-lg font-semibold mb-4 flex items-center justify-between">
-        <span>Skills & Proficiency</span>
-        {isEditing && (
-          <button 
-            onClick={handleAddSkill}
-            className="text-sm bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded"
-          >
-            + Add Skill
-          </button>
-        )}
-      </h3>
-      <div className="space-y-4">
-        {skills.map((skill, index) => (
-          <div key={index} className="space-y-2">
-            <div className="flex items-center justify-between">
+    <div className="space-y-4">
+      {isEditing && (
+        <button 
+          onClick={handleAddSkill}
+          className="text-sm bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded"
+        >
+          + Add Skill
+        </button>
+      )}
+      
+      {skills.map((skill, index) => (
+        <div key={index} className="space-y-2">
+          <div className="flex items-center justify-between">
+            {isEditing ? (
+              <Input
+                value={skill.name}
+                onChange={(e) => handleSkillChange(index, 'name', e.target.value)}
+                className="w-32 mr-2"
+              />
+            ) : (
+              <span className="font-medium">{skill.name}</span>
+            )}
+            <div className="flex items-center">
               {isEditing ? (
-                <Input
-                  value={skill.name}
-                  onChange={(e) => handleSkillChange(index, 'name', e.target.value)}
-                  className="w-32 mr-2"
-                />
+                <>
+                  <Input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={skill.value}
+                    onChange={(e) => handleSkillChange(index, 'value', parseInt(e.target.value))}
+                    className="w-16 mr-2"
+                  />
+                  <button
+                    onClick={() => handleRemoveSkill(index)}
+                    className="text-red-500 hover:text-red-700 ml-2"
+                  >
+                    ×
+                  </button>
+                </>
               ) : (
-                <span className="font-medium">{skill.name}</span>
+                <span className="text-sm font-medium" style={{ color: getColorForValue(skill.value) }}>
+                  {skill.value}%
+                </span>
               )}
-              <div className="flex items-center">
-                {isEditing ? (
-                  <>
-                    <Input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={skill.value}
-                      onChange={(e) => handleSkillChange(index, 'value', parseInt(e.target.value))}
-                      className="w-16 mr-2"
-                    />
-                    <button
-                      onClick={() => handleRemoveSkill(index)}
-                      className="text-red-500 hover:text-red-700 ml-2"
-                    >
-                      ×
-                    </button>
-                  </>
-                ) : (
-                  <span className="text-sm font-medium" style={{ color: getColorForValue(skill.value) }}>
-                    {skill.value}%
-                  </span>
-                )}
-              </div>
             </div>
-            <Progress
-              value={skill.value}
-              className="h-2"
-              // Use cn utility to apply dynamic classes based on the skill value
-              style={{ 
-                '--progress-background': getColorForValue(skill.value)
-              } as React.CSSProperties}
-            />
           </div>
-        ))}
-      </div>
+          <Progress
+            value={skill.value}
+            className="h-2"
+            style={{ 
+              '--progress-background': getColorForValue(skill.value)
+            } as React.CSSProperties}
+          />
+        </div>
+      ))}
     </div>
   );
 };
@@ -151,15 +146,6 @@ const getColorForValue = (value: number): string => {
   if (value >= 70) return '#F59E0B'; // Yellow
   if (value >= 60) return '#F97316'; // Orange
   return '#EF4444'; // Red
-};
-
-// Helper to get Tailwind color class based on skill value
-const getProgressColorClass = (value: number): string => {
-  if (value >= 90) return 'bg-emerald-500';
-  if (value >= 80) return 'bg-blue-500';
-  if (value >= 70) return 'bg-amber-500';
-  if (value >= 60) return 'bg-orange-500';
-  return 'bg-red-500';
 };
 
 export default ProfileSkills;

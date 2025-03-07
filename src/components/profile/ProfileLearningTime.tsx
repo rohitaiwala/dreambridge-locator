@@ -25,9 +25,7 @@ const ProfileLearningTime: React.FC<ProfileLearningTimeProps> = ({
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-      <h3 className="text-lg font-semibold mb-4">Learning Time</h3>
-      
+    <>
       <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
         <div className="flex items-center">
           <Clock className="h-10 w-10 text-blue-500 mr-3" />
@@ -75,7 +73,7 @@ const ProfileLearningTime: React.FC<ProfileLearningTimeProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

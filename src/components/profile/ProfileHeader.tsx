@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil, X, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { CardTitle, CardDescription } from "@/components/ui/card";
 import { User } from "@/contexts/AuthContext";
 
@@ -11,18 +11,20 @@ interface ProfileHeaderProps {
   isEditing: boolean;
   editedUser: User | null;
   displayImage: string;
-  handleEditToggle: () => void;
   setEditedUser: React.Dispatch<React.SetStateAction<User | null>>;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEdit: () => void;
+  isEditingHeader: boolean;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   isEditing,
   editedUser,
   displayImage,
-  handleEditToggle,
   setEditedUser,
   handleImageChange,
+  onEdit,
+  isEditingHeader,
 }) => {
   return (
     <div className="flex flex-col items-center text-center gap-4 pb-4">
@@ -34,7 +36,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             className="h-full w-full object-cover rounded-full"
           />
         </Avatar>
-        {isEditing && (
+        {isEditingHeader && (
           <label
             htmlFor="profile-image"
             className="absolute bottom-0 right-0 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md cursor-pointer"
@@ -52,7 +54,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </div>
       
       <div className="space-y-2 w-full max-w-md">
-        {isEditing ? (
+        {isEditingHeader ? (
           <Input
             value={editedUser?.name}
             onChange={(e) =>
@@ -75,11 +77,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       
       <Button
         variant="outline"
-        size="icon"
-        className="absolute top-4 right-4"
-        onClick={handleEditToggle}
+        size="sm"
+        className="mt-2"
+        onClick={onEdit}
       >
-        {isEditing ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+        {isEditingHeader ? "Save" : "Edit Profile"}
       </Button>
     </div>
   );

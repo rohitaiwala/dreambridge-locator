@@ -1,11 +1,14 @@
+
 import React from "react";
 import { BookOpen, MessageCircle, CalendarClock, Trophy, Clock } from "lucide-react";
 import { User } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
+
 interface ProfileStatsProps {
   user: User | null;
   isEditing?: boolean;
 }
+
 const ProfileStats: React.FC<ProfileStatsProps> = ({
   user,
   isEditing = false
@@ -16,13 +19,9 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({
   const [upcoming, setUpcoming] = React.useState("2 Sessions");
   const [streak, setStreak] = React.useState("5 Days");
   const [projects, setProjects] = React.useState(user?.role === "student" ? "3 Completed" : "7 Hosted");
-  return <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
-      <h3 className="text-xl font-bold text-[#2D3A3A] dark:text-white mb-4">
-        Activity Stats
-      </h3>
-      
-      
-
+  
+  return (
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {/* Streak Stat */}
         <div className="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg shadow-sm flex items-center gap-3">
@@ -63,6 +62,8 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({
         }}></div>
         </div>
       </div>
-    </div>;
+    </>
+  );
 };
+
 export default ProfileStats;

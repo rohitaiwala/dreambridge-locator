@@ -55,52 +55,47 @@ const ProfileCourses: React.FC<ProfileCoursesProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-      <h3 className="text-lg font-semibold mb-4">
-        {user?.role === "student" ? "Enrolled Courses" : "Teaching Courses"}
-      </h3>
-      <div className="space-y-3">
-        {courses.map((course, index) => (
-          <div key={course.id} className="flex flex-col bg-orange-50 dark:bg-gray-700 p-3 rounded-md">
-            <div className="flex justify-between items-center">
+    <div className="space-y-3">
+      {courses.map((course, index) => (
+        <div key={course.id} className="flex flex-col bg-orange-50 dark:bg-gray-700 p-3 rounded-md">
+          <div className="flex justify-between items-center">
+            {isEditing ? (
+              <Input
+                value={course.name}
+                onChange={(e) => handleCourseChange(index, 'name', e.target.value)}
+                className="w-full mb-2"
+              />
+            ) : (
+              <h4 className="font-medium text-orange-700 dark:text-orange-300">{course.name}</h4>
+            )}
+            {!isEditing && <ChevronRight className="h-4 w-4 text-orange-500" />}
+          </div>
+          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <div>
               {isEditing ? (
                 <Input
-                  value={course.name}
-                  onChange={(e) => handleCourseChange(index, 'name', e.target.value)}
-                  className="w-full mb-2"
+                  value={course.startDate}
+                  onChange={(e) => handleCourseChange(index, 'startDate', e.target.value)}
+                  className="w-28 text-xs"
                 />
               ) : (
-                <h4 className="font-medium text-orange-700 dark:text-orange-300">{course.name}</h4>
+                <span>Start: {course.startDate}</span>
               )}
-              {!isEditing && <ChevronRight className="h-4 w-4 text-orange-500" />}
             </div>
-            <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
-              <div>
-                {isEditing ? (
-                  <Input
-                    value={course.startDate}
-                    onChange={(e) => handleCourseChange(index, 'startDate', e.target.value)}
-                    className="w-28 text-xs"
-                  />
-                ) : (
-                  <span>Start: {course.startDate}</span>
-                )}
-              </div>
-              <div>
-                {isEditing ? (
-                  <Input
-                    value={course.endDate}
-                    onChange={(e) => handleCourseChange(index, 'endDate', e.target.value)}
-                    className="w-28 text-xs"
-                  />
-                ) : (
-                  <span>End: {course.endDate}</span>
-                )}
-              </div>
+            <div>
+              {isEditing ? (
+                <Input
+                  value={course.endDate}
+                  onChange={(e) => handleCourseChange(index, 'endDate', e.target.value)}
+                  className="w-28 text-xs"
+                />
+              ) : (
+                <span>End: {course.endDate}</span>
+              )}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };

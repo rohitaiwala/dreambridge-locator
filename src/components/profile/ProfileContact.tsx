@@ -31,70 +31,64 @@ const ProfileContact: React.FC<ProfileContactProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
-      <h3 className="text-xl font-bold text-[#2D3A3A] dark:text-white mb-4">
-        Contact Details
-      </h3>
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <Mail className="h-5 w-5 text-blue-500" />
+        <div className="flex-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
+          {isEditing ? (
+            <Input
+              value={editedUser?.email}
+              onChange={(e) => {
+                if (editedUser) {
+                  setEditedUser({
+                    ...editedUser,
+                    email: e.target.value,
+                  });
+                }
+              }}
+              className="mt-1 border-amber-300 bg-white/90 dark:bg-gray-900"
+            />
+          ) : (
+            <p className="text-gray-700 dark:text-gray-300">{editedUser?.email}</p>
+          )}
+        </div>
+      </div>
       
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Mail className="h-5 w-5 text-blue-500" />
-          <div className="flex-1">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
-            {isEditing ? (
-              <Input
-                value={editedUser?.email}
-                onChange={(e) => {
-                  if (editedUser) {
-                    setEditedUser({
-                      ...editedUser,
-                      email: e.target.value,
-                    });
-                  }
-                }}
-                className="mt-1 border-amber-300 bg-white/90 dark:bg-gray-900"
-              />
-            ) : (
-              <p className="text-gray-700 dark:text-gray-300">{editedUser?.email}</p>
-            )}
-          </div>
+      <div className="flex items-center gap-3">
+        <Phone className="h-5 w-5 text-green-500" />
+        <div className="flex-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Phone</p>
+          {isEditing ? (
+            <Input
+              value={phone}
+              onChange={handlePhoneChange}
+              className="mt-1 border-amber-300 bg-white/90 dark:bg-gray-900"
+            />
+          ) : (
+            <p className="text-gray-700 dark:text-gray-300">{phone}</p>
+          )}
         </div>
-        
-        <div className="flex items-center gap-3">
-          <Phone className="h-5 w-5 text-green-500" />
-          <div className="flex-1">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Phone</p>
-            {isEditing ? (
-              <Input
-                value={phone}
-                onChange={handlePhoneChange}
-                className="mt-1 border-amber-300 bg-white/90 dark:bg-gray-900"
-              />
-            ) : (
-              <p className="text-gray-700 dark:text-gray-300">{phone}</p>
-            )}
-          </div>
-        </div>
-        
-        <div className="flex items-start gap-3">
-          <Shield className="h-5 w-5 text-purple-500 mt-1" />
-          <div className="flex-1">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Privacy Setting</p>
-            {isEditing ? (
-              <Select value={privacy} onValueChange={handlePrivacyChange}>
-                <SelectTrigger className="w-full mt-1 border-amber-300 bg-white/90 dark:bg-gray-900">
-                  <SelectValue placeholder="Select privacy level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="public">Public</SelectItem>
-                  <SelectItem value="contacts">Contacts Only</SelectItem>
-                  <SelectItem value="private">Private</SelectItem>
-                </SelectContent>
-              </Select>
-            ) : (
-              <p className="text-gray-700 dark:text-gray-300 capitalize">{privacy}</p>
-            )}
-          </div>
+      </div>
+      
+      <div className="flex items-start gap-3">
+        <Shield className="h-5 w-5 text-purple-500 mt-1" />
+        <div className="flex-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Privacy Setting</p>
+          {isEditing ? (
+            <Select value={privacy} onValueChange={handlePrivacyChange}>
+              <SelectTrigger className="w-full mt-1 border-amber-300 bg-white/90 dark:bg-gray-900">
+                <SelectValue placeholder="Select privacy level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="public">Public</SelectItem>
+                <SelectItem value="contacts">Contacts Only</SelectItem>
+                <SelectItem value="private">Private</SelectItem>
+              </SelectContent>
+            </Select>
+          ) : (
+            <p className="text-gray-700 dark:text-gray-300 capitalize">{privacy}</p>
+          )}
         </div>
       </div>
     </div>

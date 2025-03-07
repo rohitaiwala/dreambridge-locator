@@ -20,18 +20,7 @@ const ProfileTeachingHistory: React.FC<ProfileTeachingHistoryProps> = ({ user, i
   ]);
 
   return (
-    <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
-      <div className="flex justify-between mb-4">
-        <h3 className="text-xl font-bold text-[#2D3A3A] dark:text-white">
-          Riwayat Pengajar
-        </h3>
-        <button className="text-gray-400 hover:text-gray-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
+    <>
       <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
         Menyelesaikan pelatihan dengan {tutors.length} pengajar
       </p>
@@ -58,7 +47,7 @@ const ProfileTeachingHistory: React.FC<ProfileTeachingHistoryProps> = ({ user, i
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
