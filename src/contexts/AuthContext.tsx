@@ -14,6 +14,17 @@ export interface User {
   hasCompletedOnboarding?: boolean;
   hasCompletedTest?: boolean;
   testScore?: number;
+  phone?: string;
+  address?: string;
+  city?: string;
+  education?: string;
+  socialLinks?: {
+    facebook?: string;
+    twitter?: string;
+    instagram?: string;
+    linkedin?: string;
+    github?: string;
+  };
 }
 
 interface AuthContextType {
@@ -37,7 +48,18 @@ const FAKE_USERS = [
     name: 'John Student',
     profileImage: 'https://i.pravatar.cc/150?img=1',
     hasCompletedOnboarding: true,
-    hasCompletedTest: true
+    hasCompletedTest: true,
+    phone: '(+62) 813-5555-1234',
+    address: '456 Learning Lane',
+    city: 'Knowledge City',
+    education: 'High School Grade 11',
+    socialLinks: {
+      facebook: 'facebook.com/johnstudent',
+      twitter: 'twitter.com/johnstudent',
+      instagram: 'instagram.com/johnstudent',
+      linkedin: 'linkedin.com/in/johnstudent',
+      github: 'github.com/johnstudent'
+    }
   },
   {
     id: '2',
@@ -48,7 +70,18 @@ const FAKE_USERS = [
     name: 'Jane Tutor',
     profileImage: 'https://i.pravatar.cc/150?img=2',
     hasCompletedOnboarding: false,
-    hasCompletedTest: false
+    hasCompletedTest: false,
+    phone: '(+62) 813-5555-7890',
+    address: '123 Teaching Avenue',
+    city: 'Education City',
+    education: 'University of Knowledge',
+    socialLinks: {
+      facebook: 'facebook.com/janetutor',
+      twitter: 'twitter.com/janetutor',
+      instagram: 'instagram.com/janetutor',
+      linkedin: 'linkedin.com/in/janetutor',
+      github: 'github.com/janetutor'
+    }
   }
 ];
 

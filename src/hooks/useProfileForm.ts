@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
 export const useProfileForm = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -36,7 +36,9 @@ export const useProfileForm = () => {
   const handleSaveProfile = () => {
     if (editedUser) {
       // In a real app, this would send the data to an API
-      // For now, we'll just show a success message
+      // For now, we'll update the local state and show a success message
+      updateUser(editedUser);
+      
       toast({
         title: "Profile updated!",
         description: "Your profile has been successfully updated."
@@ -76,6 +78,7 @@ export const useProfileForm = () => {
     handleImageChange,
     displayImage,
     navigate,
-    logout
+    logout,
+    updateUser
   };
 };
