@@ -25,9 +25,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   handleImageChange,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row md:items-center gap-6 pb-2">
+    <div className="flex flex-col items-center text-center gap-4 pb-4">
       <div className="relative">
-        <Avatar className="h-24 w-24 rounded-full border-4 border-amber-300">
+        <Avatar className="h-32 w-32 rounded-full border-4 border-amber-300 mx-auto">
           <img
             src={displayImage}
             alt={editedUser?.name || "Profile"}
@@ -50,7 +50,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           </label>
         )}
       </div>
-      <div className="space-y-1 flex-1">
+      
+      <div className="space-y-2 w-full max-w-md">
         {isEditing ? (
           <Input
             value={editedUser?.name}
@@ -59,7 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 editedUser ? { ...editedUser, name: e.target.value } : null
               )
             }
-            className="text-2xl font-bold border-amber-300 bg-white/90 dark:bg-gray-900"
+            className="text-2xl font-bold border-amber-300 bg-white/90 dark:bg-gray-900 text-center"
           />
         ) : (
           <CardTitle className="text-3xl font-bold text-[#2D3A3A] dark:text-white">
@@ -71,10 +72,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </CardDescription>
         <p className="text-[#2D3A3A] dark:text-gray-300">{editedUser?.email}</p>
       </div>
+      
       <Button
         variant="outline"
         size="icon"
-        className="self-start"
+        className="absolute top-4 right-4"
         onClick={handleEditToggle}
       >
         {isEditing ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
